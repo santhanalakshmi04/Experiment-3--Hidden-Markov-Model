@@ -1,5 +1,3 @@
-# Experiment-5 --Hidden-Markov-Model
-
 ## Aim:
  Construct a Python code to find the sequence of hidden states by the known sequence of obsevances using Hidden Markov Model. Consider two hidden states Sunny and Rainy with observable states,happy and sad. 
 ## Algorithm:
@@ -14,12 +12,39 @@ Step 8:Calculate the probability of the observed sequence by summing the last ro
 Step 9:Find the most likely sequence of hidden states by selecting the hidden state with the highest probability at each time step based on the alpha matrix.</br>
 
 ##  Program:
-''' Type your code here'''
+```
+Developed By: K.SANTHANA LAKSHMI
+Reg No: 212222240091
+
+import numpy as np
+transition_matrix = np.array([[0.7,0.3],
+                              [0.4,0.6]])
+emission_matrix = np.array([[0.1,0.9],
+                            [0.8,0.2]])
+initial_probablities = np.array([0.5,0.5])
+observed_sequence = np.array([1,1,1,0,0,1])
+alpha = np.zeros((len(observed_sequence),len(initial_probablities)))
+alpha[0,:] = initial_probablities * emission_matrix[:,observed_sequence[0]]
+for t in range(1,len(observed_sequence)):
+  for j in range(len(initial_probablities)):
+    alpha[t,j] = emission_matrix[j,observed_sequence[t]] *np.sum(alpha[t-1,:] * transition_matrix[:,j])
+probablity = np.sum(alpha[-1,:])
+print("The probablity of the observed sequence is:",probablity)
+most_likely_sequence = []
+for t in range(len(observed_sequence)):
+  if alpha[t,0]>alpha[t,1]:
+    most_likely_sequence.append("Sunny")
+  else:
+    most_likely_sequence.append("Rainy")
+print("The most likely sequence of weather states is:",most_likely_sequence)
+```
 
 ## Output:
+![exp-5 appai](https://github.com/Anusharonselva/Experiment-3--Hidden-Markov-Model/assets/119405600/a186fcac-179f-4a87-ab97-7f8e20de9329)
 
 
 
 ## Result:
 
 Thus, the Hidden Markov Model to identify the sequence of Hidden states  is executed successfully 
+
